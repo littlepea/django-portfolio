@@ -73,3 +73,55 @@ Installation
             'portfolio.context_processors.artworks'
             'portfolio.context_processors.categories'
         )
+
+
+
+Template tags
+--------
+
+1. artworks
+^^^^^^^^^^^
+
+Returns a list of artworks optionally filtered by category/collection (with offset/limit).
+
+Arguments:
+* collection - (optional) Collection object, id or slug to filter artworks by collection
+* category - (optional) Category object, id or slug to filter artworks by category
+* offset - (optional) Offset for objects list (default: 0)
+* limit - (optional) Limit for objects list (default: 10000)
+
+Usage example::
+
+    {% load portfolio_tags %}
+
+    {% artworks collection="featured" as artwork_list %}
+
+2. collections
+^^^^^^^^^^^^^^
+
+Returns a list of collections (with offset/limit).
+
+Arguments:
+* offset - (optional) Offset for objects list (default: 0)
+* limit - (optional) Limit for objects list (default: 10000)
+
+Usage example::
+
+    {% load portfolio_tags %}
+
+    {% collections as collection_list%}
+
+3. categories
+^^^^^^^^^^^^^
+
+Returns a list of categories (with offset/limit).
+
+Arguments:
+* offset - (optional) Offset for objects list (default: 0)
+* limit - (optional) Limit for objects list (default: 10000)
+
+Usage example::
+
+    {% load portfolio_tags %}
+
+    {% categories as category_list %}
