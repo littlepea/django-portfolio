@@ -26,6 +26,8 @@ class CollectionAdmin(SortableAdmin):
     model = Collection
     prepopulated_fields = {"slug": ("title",)}
     inlines = [ArtworkInline]
+    # admin customizations
+    sortable_change_form_template = 'portfolio/change_form.html'
     formfield_overrides = {
         models.TextField: {'widget': EditorWidget},
     }
@@ -51,6 +53,8 @@ class ArtworkAdmin(SortableAdmin):
     list_filter = ('collection', 'categories', 'created', 'modified')
     search_fields = ('title', 'collection__title', 'categories__title')
     readonly_fields = ('created', 'modified')
+    # admin customizations
+    sortable_change_form_template = 'portfolio/change_form.html'
     formfield_overrides = {
         models.TextField: {'widget': EditorWidget},
     }
