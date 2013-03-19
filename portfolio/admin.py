@@ -4,10 +4,12 @@ logger = logging.getLogger(__name__)
 import sys
 
 from django.contrib import admin
+from django.db import models
 
 from adminsortable.admin import SortableStackedInline, SortableAdmin
 from sorl.thumbnail.admin import AdminImageMixin
 from sorl.thumbnail import get_thumbnail
+from .editor import EditorWidget
 
 from .models import Category, Picture, Artwork, Collection
 
@@ -24,6 +26,9 @@ class CollectionAdmin(SortableAdmin):
     model = Collection
     prepopulated_fields = {"slug": ("title",)}
     inlines = [ArtworkInline]
+    formfield_overrides = {
+        models.TextField: {'widget': EditorWidget},
+    }
 
 
 class CategoryAdmin(SortableAdmin):
@@ -46,6 +51,9 @@ class ArtworkAdmin(SortableAdmin):
     list_filter = ('collection', 'categories', 'created', 'modified')
     search_fields = ('title', 'collection__title', 'categories__title')
     readonly_fields = ('created', 'modified')
+    formfield_overrides = {
+        models.TextField: {'widget': EditorWidget},
+    }
 
     def thumbnail(self, obj):
         thumbnail_format = '100x100'
