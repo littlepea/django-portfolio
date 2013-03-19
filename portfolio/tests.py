@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.core.urlresolvers import reverse
 
 from .models import Artwork, Category, Collection, Picture
+from .templatetags import portfolio_tags
 
 
 class PortfolioTestBase(TestCase):
@@ -418,3 +419,74 @@ class CollectionTests(PortfolioTestBase):
         self.assertEqual(response.status_code, 200)
 
         self.assertContains(response, obj.get_absolute_url())
+
+
+class PortfolioTagsTest(TestCase):
+    """
+    Tests for template tags
+    """
+    def setUp(self):
+        self.featured = Collection(title='Featured', slug='featured')
+        self.featured.save()
+        self.artwork1 = Artwork(collection=self.featured, title='Art 1')
+        self.artwork1.save()
+        self.artwork2 = Artwork(collection=self.featured, title='Art 2')
+        self.artwork2.save()
+        self.artwork3 = Artwork(collection=self.featured, title='Art 3')
+        self.artwork3.save()
+        self.photos = Category(title='Photos', slug='photos')
+        self.photos.save()
+        self.photos.artworks.add(self.artwork1)
+
+    def test_artworks_tag(self):
+        """
+        Test portfolio_tags.artworks
+        """
+        # No params
+        self.assertListEqual(list(Artwork.objects.all()), list(portfolio_tags.artworks()))
+        # Offset/limit
+        self.assertListEqual(list(Artwork.objects.all()[1:]), list(portfolio_tags.artworks(offset=1)))
+        self.assertListEqual(list(Artwork.objects.all()[1:2]), list(portfolio_tags.artworks(offset=1, limit=1)))
+        self.assertListEqual(list(Artwork.objects.all()[:1000]), list(portfolio_tags.artworks(limit=1000)))
+        # Filter by category
+        self.assertListEqual(list(Artwork.objects.filter(categories=self.photos)),
+                             list(portfolio_tags.artworks(category=self.photos))
+        )
+        self.assertListEqual(list(Artwork.objects.filter(categories=self.photos)),
+                             list(portfolio_tags.artworks(category=self.photos.id))
+        )
+        self.assertListEqual(list(Artwork.objects.filter(categories=self.photos)),
+                             list(portfolio_tags.artworks(category=self.photos.slug))
+        )
+        # Filter by collection
+        self.assertListEqual(list(Artwork.objects.filter(collection=self.featured)),
+                             list(portfolio_tags.artworks(collection=self.featured))
+        )
+        self.assertListEqual(list(Artwork.objects.filter(collection=self.featured)),
+                             list(portfolio_tags.artworks(collection=self.featured.id))
+        )
+        self.assertListEqual(list(Artwork.objects.filter(collection=self.featured)),
+                             list(portfolio_tags.artworks(collection=self.featured.slug))
+        )
+
+    def test_categories_tag(self):
+        """
+        Test portfolio_tags.categories
+        """
+        # No params
+        self.assertListEqual(list(Category.objects.all()), list(portfolio_tags.categories()))
+        # Offset/limit
+        self.assertListEqual(list(Category.objects.all()[1:]), list(portfolio_tags.categories(offset=1)))
+        self.assertListEqual(list(Category.objects.all()[1:2]), list(portfolio_tags.categories(offset=1, limit=1)))
+        self.assertListEqual(list(Category.objects.all()[:1000]), list(portfolio_tags.categories(limit=1000)))
+
+    def test_collections_tag(self):
+        """
+        Test portfolio_tags.collections
+        """
+        # No params
+        self.assertListEqual(list(Collection.objects.all()), list(portfolio_tags.collections()))
+        # Offset/limit
+        self.assertListEqual(list(Collection.objects.all()[1:]), list(portfolio_tags.collections(offset=1)))
+        self.assertListEqual(list(Collection.objects.all()[1:2]), list(portfolio_tags.collections(offset=1, limit=1)))
+        self.assertListEqual(list(Collection.objects.all()[:1000]), list(portfolio_tags.collections(limit=1000)))
