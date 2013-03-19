@@ -82,7 +82,7 @@ Installation
             'imperavi',
         )
 
-Known to work are `django-imperavi`_ as well as `django-tinymce`_. Be sure to follow installation instructions for respective editors.
+Known to work are `django-imperavi`_ as well as `django-tinymce`_ . Be sure to follow installation instructions for respective editors.
 
 .. _django-imperavi: https://github.com/vasyabigi/django-imperavi
-.. _django-tinycme: https://github.com/aljosa/django-tinymce
+.. _django-tinymce: https://github.com/aljosa/django-tinymce
