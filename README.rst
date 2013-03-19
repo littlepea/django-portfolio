@@ -73,3 +73,16 @@ Installation
             'portfolio.context_processors.artworks'
             'portfolio.context_processors.categories'
         )
+
+10. (Optionally) Install and configure your preferred rich text widget::
+
+        INSTALLED_APPS = (
+            ...
+            # Imperavi (or tinymce) rich text editor is optional
+            'imperavi',
+        )
+
+Known to work are `django-imperavi`_ as well as `django-tinymce`_. Be sure to follow installation instructions for respective editors.
+
+.. _django-imperavi: https://github.com/vasyabigi/django-imperavi
+.. _django-tinycme: https://github.com/aljosa/django-tinymce
