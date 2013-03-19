@@ -13,7 +13,7 @@ except:
 
 setup(
     name = 'django-portfolio',
-    version = "0.1",
+    version = "0.2a1",
     description = 'An artist\'s portfolio as a pluggable Django app.',
     long_description = README,
     install_requires = REQUIREMENTS,
