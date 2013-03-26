@@ -25,6 +25,14 @@ Features
 * Very basic front-end templates to help kickstart integration.
 * South migrations available for hassle-free upgrade paths.
 
+Contributors
+--------
+* `Mathijs de Bruin`_ (author)
+* `Evgeny Demchenko`_
+
+.. _Mathijs de Bruin: https://github.com/dokterbob
+.. _Evgeny Demchenko: https://github.com/littlepea
+
 Installation
 ------------
 1. `pip install -e https://github.com/dokterbob/django-portfolio.git#egg=django-portfolio`
