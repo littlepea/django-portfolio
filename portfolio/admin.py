@@ -60,10 +60,10 @@ class ArtworkAdmin(SortableAdmin):
     }
 
     def thumbnail(self, obj):
-        thumbnail_format = '100x100'
         picture = obj.get_default_picture()
 
         if picture:
+            thumbnail_format = '100x100'
             try:
                 thumb = get_thumbnail(
                     picture.image, thumbnail_format, crop='center'

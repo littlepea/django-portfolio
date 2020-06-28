@@ -44,8 +44,7 @@ def categories(offset=0, limit=10000):
     :param limit: (optional) Limit for objects list (default: 10000)
     :return: List of Categories
     """
-    object_list = models.Category.objects.all()[offset:offset+limit]
-    return object_list
+    return models.Category.objects.all()[offset:offset+limit]
 
 
 @register.assignment_tag()
@@ -58,5 +57,4 @@ def collections(offset=0, limit=10000):
     :param limit: (optional) Limit for objects list (default: 10000)
     :return: List of Collections
     """
-    object_list = models.Collection.objects.all()[offset:offset+limit]
-    return object_list
+    return models.Collection.objects.all()[offset:offset+limit]

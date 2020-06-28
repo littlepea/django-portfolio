@@ -33,9 +33,7 @@ class PortfolioTestBase(TestCase):
         if not slug:
             slug = self.get_unique_slug(Category)
 
-        obj = Category(slug=slug, title=title)
-
-        return obj
+        return Category(slug=slug, title=title)
 
     def create_collection(self, slug=None, title='Test collection'):
         """ Create collection such that it can be saved, but don't save. """
@@ -43,9 +41,7 @@ class PortfolioTestBase(TestCase):
         if not slug:
             slug = self.get_unique_slug(Category)
 
-        obj = Collection(slug=slug, title=title)
-
-        return obj
+        return Collection(slug=slug, title=title)
 
     def create_artwork(self, collection=None):
         """ Create artwork such that it can be saved - but don't save. """
@@ -54,9 +50,7 @@ class PortfolioTestBase(TestCase):
             collection = self.create_collection()
             collection.save()
 
-        obj = Artwork(collection=collection)
-
-        return obj
+        return Artwork(collection=collection)
 
     def create_picture(self, artwork=None, title='Test picture'):
         """ Create Picture such that it can be saved, but don't. """
@@ -65,8 +59,7 @@ class PortfolioTestBase(TestCase):
             artwork = self.create_artwork()
             artwork.save()
 
-        obj = Picture(artwork=artwork, title=title)
-        return obj
+        return Picture(artwork=artwork, title=title)
 
 
 class HomeTests(PortfolioTestBase):
@@ -439,7 +432,7 @@ class EditorTestBase(TestCase):
         if not expected_widget:
             from django.forms.widgets import Textarea
             expected_widget = Textarea
-        if not expected_admin or not expected_inline:
+        if not (expected_admin and expected_inline):
             from django.contrib.admin import ModelAdmin, StackedInline
             expected_admin = ModelAdmin
             expected_inline = StackedInline

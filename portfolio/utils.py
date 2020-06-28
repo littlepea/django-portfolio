@@ -8,11 +8,7 @@ def get_next_or_previous(qs, item, next=True):
     item specified.
     """
     # If we want the previous object, reverse the default ordering
-    if next:
-        default_ordering = 'ASC'
-    else:
-        default_ordering = 'DESC'
-
+    default_ordering = 'ASC' if next else 'DESC'
     # First, determine the ordering. This code is from get_ordering() in
     # django.db.sql.compiler
     if qs.query.extra_order_by:
@@ -22,7 +18,7 @@ def get_next_or_previous(qs, item, next=True):
     else:
         ordering = qs.query.order_by or qs.query.model._meta.ordering
 
-    assert not ordering == '?', 'This makes no sense for random ordering.'
+    assert ordering != '?', 'This makes no sense for random ordering.'
 
     query_filter = None
     for field in ordering:
